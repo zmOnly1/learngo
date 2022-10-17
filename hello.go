@@ -174,4 +174,11 @@ func printMap() {
 	for k, v := range m {
 		fmt.Println(k, v)
 	}
+	clz, ok := m["class"]
+	clz1, ok1 := m["class1"]
+	fmt.Println(clz, ok)
+	fmt.Println(clz1, ok1)
+
+	delete(m, "class")
+	fmt.Println(m)
 }
