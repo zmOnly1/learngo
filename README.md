@@ -19,3 +19,9 @@ $ go env -w GOPROXY=https://goproxy.cn,direct
   go get -u github.com/abc
   $GOPATH/src/project1/vendor/github.com/abc
   ```
+- GO MOD
+  ```shell
+  go get -u github.com/abc
+  
+  $GOPATH/pkg/mod/github.com/abc@v1.1.1
+  ```
