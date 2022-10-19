@@ -24,4 +24,7 @@ $ go env -w GOPROXY=https://goproxy.cn,direct
   go get -u github.com/abc@v1.1.1
   
   $GOPATH/pkg/mod/github.com/abc@v1.1.1
+  
+  go mod init
+  go mod tidy
   ```
