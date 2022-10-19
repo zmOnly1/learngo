@@ -25,6 +25,8 @@ $ go env -w GOPROXY=https://goproxy.cn,direct
   
   $GOPATH/pkg/mod/github.com/abc@v1.1.1
   
-  go mod init
+  go mod init <module  name>
   go mod tidy
+  go build ./...
+  go install ./... => $GOPATH/bin
   ```
