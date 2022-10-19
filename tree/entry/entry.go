@@ -27,6 +27,7 @@ func main() {
 	root.Right = &tree.Node{Value: 5}
 	root.Right.Left = new(tree.Node)
 	root.Left.Right = tree.CreateNode(2)
+	root.Right.Left.SetValue(4)
 
 	//nodes := []tree.Node{
 	//	{Value: 3},
