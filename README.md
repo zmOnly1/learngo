@@ -68,3 +68,7 @@ go tool pprof cpu.out
     - runtime.Gosched()
   - goroutine通信
     - channel
+    - select
+    - WaitGroup,Mutex,Cond
+    - atomic
+      - ```go run -race atomic.go ```
