@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"learngo2/functional/fib"
 	"os"
@@ -12,9 +13,16 @@ func main() {
 }
 
 func writeFile(fileName string) {
-	file, err := os.Create(fileName)
+	file, err := os.OpenFile(fileName, os.O_EXCL|os.O_CREATE, 0666)
+
+	err = errors.New("this is a custom error")
 	if err != nil {
-		panic(err)
+		if pathError, ok := err.(*os.PathError); !ok {
+			panic(err)
+		} else {
+			fmt.Printf("%s, %s, %s\n", pathError.Op, pathError.Path, pathError.Err)
+		}
+		return
 	}
 	defer file.Close()
 
