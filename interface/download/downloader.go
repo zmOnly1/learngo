@@ -5,6 +5,8 @@ import (
 	"learngo2/interface/infra"
 )
 
+type Queue []interface{}
+
 func main() {
 	retriever := getRetriever()
 
