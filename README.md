@@ -54,3 +54,17 @@ go tool pprof cpu.out
 (pprof) help
 (pprof) web
 ```
+12. 文档生成
+```sheel
+  go doc
+  go doc fmt.Println
+```
+13. goroutine
+  - goroutine可能的切换点
+    - I/O, select
+    - channel
+    - 等待锁
+    - 函数调用
+    - runtime.Gosched()
+  - goroutine通信
+    - channel
