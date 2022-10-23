@@ -21,10 +21,24 @@ func main() {
 
 }
 
-type retriever interface {
+type Retriever interface {
 	Get(string) string
 }
 
-func getRetriever() retriever {
+type Poster interface {
+	Post(url string, form map[string]string)
+}
+
+type RetrieverPoster interface {
+	Retriever
+	Poster
+}
+
+func session(s RetrieverPoster) {
+	s.Get("")
+	s.Post("", map[string]string{})
+}
+
+func getRetriever() Retriever {
 	return infra.Retriever{}
 }
