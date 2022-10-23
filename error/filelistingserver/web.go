@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"learngo2/error/filelistingserver/filelisting"
 	"net/http"
 	"os"
@@ -10,6 +11,14 @@ type appHandler func(writer http.ResponseWriter, request *http.Request) error
 
 func errWrapper(handler appHandler) func(writer http.ResponseWriter, request *http.Request) {
 	return func(writer http.ResponseWriter, request *http.Request) {
+
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Printf("Panic: %v", r)
+				http.Error(writer, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			}
+		}()
+
 		err := handler(writer, request)
 		if err != nil {
 			code := http.StatusOK

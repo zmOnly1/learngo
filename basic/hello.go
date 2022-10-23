@@ -19,7 +19,6 @@ func main() {
 	fmt.Println(1<<10, 1<<20, 1<<30, 1<<40)
 
 	fmt.Println(strconv.Itoa(a))
-	fmt.Println(string(a))
 
 	switch a {
 	case 3:
@@ -241,4 +240,10 @@ func printMultipleString() {
 		hello "world1"
 	`
 	fmt.Println(s)
+}
+
+func calcTriangle(a, b int) int {
+	var c int
+	c = int(math.Sqrt(float64(a*a + b*b)))
+	return c
 }

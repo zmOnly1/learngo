@@ -40,5 +40,17 @@ $ go env -w GOPROXY=https://goproxy.cn,direct
 7. 接口，duck typing，接口组合
 8. 函数式编程，闭包
 9. defer,错误处理，panic,recover
-10. 代码覆盖率和性能测试
-11. http
+10. http
+11. 测试,覆盖测试和性能测试; 
+```shell 
+#代码覆盖率
+go test .
+go test -coverprofile c.out 
+go tool cover -html=c.out
+#性能测试
+go test -bench .
+go test -bench . -cpuprofile cpu.out
+go tool pprof cpu.out
+(pprof) help
+(pprof) web
+```
