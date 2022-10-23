@@ -72,6 +72,7 @@ func main() {
 	fmt.Println(lengthOfNonRepeatingSubStr("abcabcbb")) //3
 	fmt.Println(lengthOfNonRepeatingSubStr("bbbbbbb"))  //1
 	fmt.Println(lengthOfNonRepeatingSubStr("abdevbac")) //6
+	printMultipleString()
 }
 
 func apply(op func(int, int) int, a, b int) int {
@@ -232,4 +233,12 @@ func lengthOfNonRepeatingSubStr(s string) int {
 		lastOccurred[ch] = i
 	}
 	return maxLength
+}
+
+func printMultipleString() {
+	s := `
+		hello "world"
+		hello "world1"
+	`
+	fmt.Println(s)
 }
