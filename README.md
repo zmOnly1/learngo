@@ -30,3 +30,13 @@ $ go env -w GOPROXY=https://goproxy.cn,direct
   go build ./...
   go install ./... => $GOPATH/bin
   ```
+### 目录
+1. 常量枚举：const
+2. 条件、循环：if exp {}, for {}
+3. 指针：值传递，引用传递
+4. 数组，切片，Map
+5. 结构体组合，内嵌
+6. 包管理：GOPATH,GOVENDOR,go mod
+7. 接口，duck typing，接口组合
+8. 函数式编程，闭包
+9. defer,错误处理，
