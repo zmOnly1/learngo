@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"learngo2/error/filelistingserver/filelisting"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 )
 

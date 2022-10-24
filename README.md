@@ -34,7 +34,7 @@ $ go env -w GOPROXY=https://goproxy.cn,direct
 1. 常量枚举：const
 2. 条件、循环：if exp {}, for {}
 3. 指针：值传递，引用传递
-4. 数组，切片，Map
+4. 数组(len,cap)，切片，Map
 5. 结构体组合，内嵌
 6. 包管理：GOPATH,GOVENDOR,go mod
 7. 接口，duck typing，接口组合
@@ -54,10 +54,21 @@ go tool pprof cpu.out
 (pprof) help
 (pprof) web
 ```
+```shell
+#import dependency
+_ "net/http/pprof"
+#request pprof endpoint
+http://localhost:8888/debug/pprof/
+go tool pprof http://localhost:8888/debug/pprof/profile
+```
 12. 文档生成
 ```sheel
   go doc
   go doc fmt.Println
+  go install golang.org/x/tools/cmd/godoc
+  godoc -http :8080
+  https://studygolang.com
+  https://studygolang.com/pkgdoc
 ```
 13. goroutine
   - goroutine可能的切换点
@@ -72,3 +83,7 @@ go tool pprof cpu.out
     - WaitGroup,Mutex,Cond
     - atomic
       - ```go run -race atomic.go ```
+    - useful tool
+      - http、bufio、log、encoding/json、regexp、time
+      - strings/math/rand
+        
