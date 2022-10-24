@@ -86,4 +86,7 @@ go tool pprof http://localhost:8888/debug/pprof/profile
     - useful tool
       - http、bufio、log、encoding/json、regexp、time
       - strings/math/rand
-        
+14. ```shell
+    # https://github.com/gin-gonic/gin
+    go get -u github.com/gin-gonic/gin
+    go get -u go.uber.org/zap
