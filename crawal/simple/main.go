@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
+	"golang.org/x/text/transform"
 	"io"
 	"net/http"
 	"regexp"
@@ -21,13 +22,15 @@ func main() {
 		fmt.Println("Error: status code", resp.StatusCode)
 		return
 	}
-	//e := determineEncoding(resp.Body)
-	//newReader := transform.NewReader(resp.Body, e.NewDecoder())
-	all, err := io.ReadAll(resp.Body)
+	bodyReader := bufio.NewReader(resp.Body)
+	e := determineEncoding(bodyReader)
+	utf8Reader := transform.NewReader(bodyReader, e.NewDecoder())
+	all, err := io.ReadAll(utf8Reader)
 	if err != nil {
 		panic(err)
 	}
 
+	//fmt.Printf("body: %s\n", all)
 	printCityList(all)
 
 }
@@ -41,8 +44,8 @@ func printCityList(contents []byte) {
 	fmt.Printf("Matches found: %d\n", len(matches))
 }
 
-func determineEncoding(r io.Reader) encoding.Encoding {
-	bytes, err := bufio.NewReader(r).Peek(1024)
+func determineEncoding(r *bufio.Reader) encoding.Encoding {
+	bytes, err := r.Peek(1024)
 	if err != nil {
 		panic(err)
 	}
