@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-func TestPrintCityList(t *testing.T) {
+func TestParseCityList(t *testing.T) {
 	contents, err := os.ReadFile("citylist_test_data.html")
 	if err != nil {
 		panic(err)
 	}
-	result := PrintCityList(contents)
+	result := ParseCityList(contents)
 	const resultSize = 470
 
 	if len(result.Requests) != resultSize {

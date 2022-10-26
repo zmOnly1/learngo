@@ -8,6 +8,6 @@ import (
 func main() {
 	engine.Run(engine.Request{
 		Url:       "http://www.zhenai.com/zhenghun/",
-		ParseFunc: parser.PrintCityList,
+		ParseFunc: parser.ParseCityList,
 	})
 }
