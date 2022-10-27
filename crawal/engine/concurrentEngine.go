@@ -26,10 +26,12 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 		e.Scheduler.Submit(r)
 	}
 
+	count := 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			log.Printf("Got item: %v", item)
+			log.Printf("Got item #%d: %v", count, item)
+			count++
 		}
 
 		for _, request := range result.Requests {
