@@ -20,7 +20,7 @@ func Run(seeds ...Request) {
 			log.Printf("Fetcher: error fetching url %s: %v", r.Url, err)
 			continue
 		}
-		parseResult := r.ParseFunc(body)
+		parseResult := r.ParseFunc(body, r.Url)
 		requests = append(requests, parseResult.Requests...)
 
 		for _, item := range parseResult.Items {

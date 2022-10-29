@@ -1,13 +1,9 @@
 package engine
 
-import (
-	"learngo2/crawal/model"
-)
-
 type ConcurrentEngine4 struct {
 	Scheduler   Scheduler4
 	WorkerCount int
-	ItemChan    chan interface{}
+	ItemChan    chan Item
 }
 
 type Scheduler4 interface {
@@ -40,11 +36,9 @@ func (e *ConcurrentEngine4) Run(seeds ...Request) {
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			if profileItem, ok := item.Payload.(model.Profile); ok {
-				go func(item model.Profile) {
-					e.ItemChan <- item
-				}(profileItem)
-			}
+			go func(item Item) {
+				e.ItemChan <- item
+			}(item)
 		}
 
 		for _, request := range result.Requests {
