@@ -41,7 +41,7 @@ func (e *ConcurrentEngine3) Run(seeds ...Request) {
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			if _, ok := item.(model.Profile); ok {
+			if _, ok := item.Payload.(model.Profile); ok {
 				log.Printf("Got profile #%d: %v", profileCount, item)
 				profileCount++
 			}

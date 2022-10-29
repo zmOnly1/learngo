@@ -13,9 +13,10 @@ import (
 var (
 	re      = regexp.MustCompile(`<div data-[\w-]+="" class="m-btn purple">([^<]+)</div>`)
 	guessRe = regexp.MustCompile(`<a data-[\w-]+="" target="_self" class="user f-cl" href="//www.zhenai.com/n/login?channelId=905819&amp;fromurl=https%3A%2F%2Falbum.zhenai.com%2Fu%2F1160833431">`)
+	idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/(\d+)`)
 )
 
-func ParseProfile(contents []byte, name string) engine.ParseResult {
+func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
 	node := selectNode(contents)
 	matches := re.FindAllSubmatch(node, -1)
 
@@ -41,10 +42,25 @@ func ParseProfile(contents []byte, name string) engine.ParseResult {
 	profile.Education = string(Education)
 
 	result := engine.ParseResult{
-		Items: []interface{}{profile},
+		Items: []engine.Item{
+			{
+				Url:     url,
+				Id:      extractString([]byte(url), idUrlRe),
+				Payload: profile,
+			},
+		},
 	}
 
 	return result
+}
+
+func extractString(contents []byte, re *regexp.Regexp) string {
+	match := re.FindSubmatch(contents)
+	if len(match) >= 2 {
+		return string(match[1])
+	} else {
+		return ""
+	}
 }
 
 func selectNode(contents []byte) []byte {

@@ -40,7 +40,7 @@ func (e *ConcurrentEngine4) Run(seeds ...Request) {
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			if profileItem, ok := item.(model.Profile); ok {
+			if profileItem, ok := item.Payload.(model.Profile); ok {
 				go func(item model.Profile) {
 					e.ItemChan <- item
 				}(profileItem)
