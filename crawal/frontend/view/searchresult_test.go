@@ -1,4 +1,4 @@
-package frontend
+package view
 
 import (
 	"learngo2/crawal/engine"
@@ -6,11 +6,10 @@ import (
 	common "learngo2/crawal/model"
 	"os"
 	"testing"
-	"text/template"
 )
 
-func TestTempolate(t *testing.T) {
-	template := template.Must(template.ParseFiles("template.html"))
+func TestSearchResultView_render(t *testing.T) {
+	view := CreateSearchResultView("template.html")
 	page := model.SearchResult{}
 	page.Hits = 123
 	item := engine.Item{
@@ -33,7 +32,7 @@ func TestTempolate(t *testing.T) {
 	}
 
 	out, err := os.Create("template.test.html")
-	err = template.Execute(out, page)
+	err = view.Render(out, page)
 	if err != nil {
 		panic(err)
 	}
