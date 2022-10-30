@@ -89,6 +89,7 @@ func (h SearchResultHandler) getSearchResult(q string, from int) (model.SearchRe
 
 // Rewrites query string. Replaces field names
 // like "Age" to "Payload.Age"
+// like "女 Age:(<25) Height:(>165)"
 func rewriteQueryString(q string) string {
 	re := regexp.MustCompile(`([A-Z][a-z]*):`)
 	return re.ReplaceAllString(q, "Payload.$1:")
