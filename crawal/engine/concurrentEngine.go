@@ -44,7 +44,7 @@ func createWorker(in chan Request, out chan ParseResult) {
 	go func() {
 		for {
 			request := <-in
-			parseResult, err := worker(request)
+			parseResult, err := Worker(request)
 			if err != nil {
 				continue
 			}

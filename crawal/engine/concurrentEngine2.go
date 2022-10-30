@@ -48,7 +48,7 @@ func createWorker2(out chan ParseResult, s Scheduler2) {
 		for {
 			s.WorkerReady(in)
 			request := <-in
-			parseResult, err := worker(request)
+			parseResult, err := Worker(request)
 			if err != nil {
 				continue
 			}
