@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learngo2/functional/tree"
+	"learngo2/basic/functional/tree"
 )
 
 func main() {

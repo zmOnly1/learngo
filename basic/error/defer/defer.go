@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"learngo2/functional/fib"
+	"learngo2/basic/functional/fib"
 	"os"
 )
 

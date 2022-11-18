@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learngo2/tree"
+	"learngo2/basic/tree"
 )
 
 type myTreeNode struct {

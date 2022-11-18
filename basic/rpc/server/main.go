@@ -1,7 +1,7 @@
 package main
 
 import (
-	rpcdemo "learngo2/rpc"
+	"learngo2/basic/rpc"
 	"log"
 	"net"
 	"net/rpc"

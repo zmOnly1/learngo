@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learngo2/interface/infra"
+	"learngo2/basic/interface/infra"
 )
 
 type Queue []interface{}

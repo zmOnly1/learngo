@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	rpcdemo "learngo2/rpc"
+	"learngo2/basic/rpc"
 	"net"
 	"net/rpc/jsonrpc"
 )

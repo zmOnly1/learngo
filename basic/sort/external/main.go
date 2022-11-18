@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"learngo2/sort/node"
+	node2 "learngo2/basic/sort/node"
 	"os"
 	"strconv"
 )
@@ -37,7 +37,7 @@ func printFile(filename string) {
 	}
 	defer file.Close()
 
-	p := node.ReaderSource(file, -1)
+	p := node2.ReaderSource(file, -1)
 	count := 0
 	for v := range p {
 		fmt.Println(v)
@@ -57,13 +57,13 @@ func writeToFile(p <-chan int, filename string) {
 	writer := bufio.NewWriter(file)
 	defer writer.Flush()
 
-	node.WriterSink(writer, p)
+	node2.WriterSink(writer, p)
 }
 
 func createPipeline(filename string,
 	fileSize, chunkCount int) <-chan int {
 	chunkSize := fileSize / chunkCount
-	node.Init()
+	node2.Init()
 
 	var sortResults []<-chan int
 	for i := 0; i < chunkCount; i++ {
@@ -72,18 +72,18 @@ func createPipeline(filename string,
 			panic(err)
 		}
 		file.Seek(int64(i*chunkSize), 0)
-		source := node.ReaderSource(bufio.NewReader(file), chunkSize)
+		source := node2.ReaderSource(bufio.NewReader(file), chunkSize)
 
-		sortResults = append(sortResults, node.InMemSort(source))
+		sortResults = append(sortResults, node2.InMemSort(source))
 	}
-	return node.MergeN(sortResults...)
+	return node2.MergeN(sortResults...)
 
 }
 
 func createNetworkPipeline(filename string,
 	fileSize, chunkCount int) <-chan int {
 	chunkSize := fileSize / chunkCount
-	node.Init()
+	node2.Init()
 
 	var sortAddr []string
 	for i := 0; i < chunkCount; i++ {
@@ -92,16 +92,16 @@ func createNetworkPipeline(filename string,
 			panic(err)
 		}
 		file.Seek(int64(i*chunkSize), 0)
-		source := node.ReaderSource(bufio.NewReader(file), chunkSize)
+		source := node2.ReaderSource(bufio.NewReader(file), chunkSize)
 
 		addr := ":" + strconv.Itoa(7000+i)
-		node.NetworkSink(addr, node.InMemSort(source))
+		node2.NetworkSink(addr, node2.InMemSort(source))
 		sortAddr = append(sortAddr, addr)
 	}
 	var sortResults []<-chan int
 	for _, addr := range sortAddr {
-		sortResults = append(sortResults, node.NetworkSource(addr))
+		sortResults = append(sortResults, node2.NetworkSource(addr))
 	}
-	return node.MergeN(sortResults...)
+	return node2.MergeN(sortResults...)
 
 }

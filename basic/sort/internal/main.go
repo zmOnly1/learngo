@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"learngo2/sort/node"
+	"learngo2/basic/sort/node"
 	"os"
 )
 
