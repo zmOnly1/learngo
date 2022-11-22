@@ -1,6 +1,6 @@
 package main
 
-import "learngo2/chat_server/model"
+import "learngo2/mychat/chat_server/model"
 
 var (
 	mgr *model.UserMgr

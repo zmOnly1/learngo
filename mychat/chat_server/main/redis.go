@@ -7,7 +7,8 @@ import (
 
 var pool *redis.Pool
 
-func initRedis(addr string, idleConn, maxConn int, idleTimeout time.Duration) (err error) {
+func initRedis(addr string, idleConn, maxConn int, idleTimeout time.Duration) {
+
 	pool = &redis.Pool{
 		MaxIdle:     idleConn,
 		MaxActive:   maxConn,

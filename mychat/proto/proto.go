@@ -1,6 +1,6 @@
 package proto
 
-import "learngo2/chat_server/model"
+import "learngo2/mychat/model"
 
 type Message struct {
 	Cmd  string `json:"cmd"`

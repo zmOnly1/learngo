@@ -15,67 +15,81 @@ type UserMgr struct {
 	pool *redis.Pool
 }
 
-func NewUserMgr(pool *redis.Pool) *UserMgr {
-	mgr := &UserMgr{
+func NewUserMgr(pool *redis.Pool) (mgr *UserMgr) {
+
+	mgr = &UserMgr{
 		pool: pool,
 	}
-	return mgr
+	return
 }
 
-func (p *UserMgr) getUser(conn redis.Conn, id int) (*User, error) {
+func (p *UserMgr) getUser(conn redis.Conn, id int) (user *User, err error) {
+
 	result, err := redis.String(conn.Do("HGet", UserTable, fmt.Sprintf("%d", id)))
 	if err != nil {
 		if err == redis.ErrNil {
-			return nil, ErrUserNotExist
+			err = ErrUserNotExist
 		}
-		return nil, err
+		return
 	}
-	user := &User{}
+
+	user = &User{}
 	err = json.Unmarshal([]byte(result), user)
 	if err != nil {
-		return nil, err
+		return
 	}
-	return user, nil
+	return
 }
 
-func (p *UserMgr) Login(id int, passwd string) (*User, error) {
+func (p *UserMgr) Login(id int, passwd string) (user *User, err error) {
+
 	conn := p.pool.Get()
 	defer conn.Close()
 
-	user, err := p.getUser(conn, id)
+	user, err = p.getUser(conn, id)
 	if err != nil {
-		return nil, err
+		return
 	}
+
 	if user.UserId != id || user.Passwd != passwd {
-		return nil, ErrInvalidPasswd
+		err = ErrInvalidPasswd
 	}
+
 	user.Status = UserStatusOnline
 	user.LastLogin = fmt.Sprintf("%v", time.Now())
-	return user, nil
+
+	return
 }
 
-func (p *UserMgr) Register(user *User) error {
+func (p *UserMgr) Register(user *User) (err error) {
+
 	conn := p.pool.Get()
 	defer conn.Close()
+
 	if user == nil {
 		fmt.Println("invalid user")
-		return ErrInvalidParams
+		err = ErrInvalidParams
+		return
 	}
-	_, err := p.getUser(conn, user.UserId)
-	if err != nil {
-		return ErrUserExist
+
+	_, err = p.getUser(conn, user.UserId)
+	if err == nil {
+		err = ErrUserExist
+		return
 	}
+
 	if err != ErrUserNotExist {
-		return err
+		return
 	}
+
 	data, err := json.Marshal(user)
 	if err != nil {
-		return err
+		return
 	}
+
 	_, err = conn.Do("HSet", UserTable, fmt.Sprintf("%d", user.UserId), string(data))
 	if err != nil {
-		return err
+		return
 	}
-	return nil
-
+	return
 }
