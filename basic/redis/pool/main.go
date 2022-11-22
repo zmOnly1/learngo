@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-
 	pool := &redis.Pool{
 		MaxIdle:     16,
 		MaxActive:   0,

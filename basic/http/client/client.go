@@ -1,16 +1,20 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"net"
 	"net/http"
 	"net/http/httputil"
+	"time"
 )
 
 func main() {
-	requestWithClientAndHeader()
+	//requestWithClientAndHeader()
 	//requestWithDefaultClientAndHeader()
 
 	//commonRequest()
+	test()
 }
 
 func requestWithClientAndHeader() {
@@ -60,4 +64,29 @@ func commonRequest() {
 		panic(err)
 	}
 	fmt.Printf("%s\n", s)
+}
+
+func test() {
+	var url = []string{
+		"http://www.baidu.com",
+		"http://google,com",
+		"http://taobao.com",
+	}
+
+	for _, v := range url {
+		c := http.Client{
+			Transport: &http.Transport{
+				DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+					return net.DialTimeout(network, addr, time.Second*2)
+				},
+			},
+		}
+		resp, err := c.Head(v)
+		if err != nil {
+			fmt.Printf("head %s failed, err: %v\n", v, err)
+			continue
+		}
+		fmt.Printf("head succ, status: %v\n", resp.Status)
+	}
+
 }
