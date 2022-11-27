@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"time"
 )
@@ -27,6 +28,9 @@ func watch() {
 		rch := cli.Watch(context.Background(), key)
 		for wresp := range rch {
 			for _, ev := range wresp.Events {
+				if ev.Type == mvccpb.DELETE {
+					fmt.Println("delete")
+				}
 				fmt.Printf("%s %q : %q\n", ev.Type, ev.Kv.Key, ev.Kv.Value)
 			}
 		}

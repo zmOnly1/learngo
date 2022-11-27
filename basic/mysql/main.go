@@ -33,6 +33,27 @@ func main() {
 	//insert()
 	update()
 	query()
+	transaction()
+}
+
+func transaction() {
+	conn, err := DB.Begin()
+	if err != nil {
+		panic(err)
+	}
+
+	r, err := conn.Exec("insert into person(username, sex, email) values(?,?,?)", "stu001", "man", "stu01@163.com")
+	if err != nil {
+		conn.Rollback()
+		panic(err)
+	}
+	r, err = conn.Exec("insert into person(username, sex, email) values(?,?,?)", "stu001", "man", "stu01@163.com")
+	if err != nil {
+		conn.Rollback()
+		panic(err)
+	}
+	conn.Commit()
+	fmt.Println(r)
 }
 
 func insert() {
