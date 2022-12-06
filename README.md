@@ -1,6 +1,7 @@
 ```shell
 $ go env -w GO111MODULE=on
 $ go env -w GOPROXY=https://goproxy.cn,direct
+$ go tool compile -S .\main.go #显示汇编指令
 ```
 ### GOPATH、GOVENDOR、GO MODE
 - GOPATH
@@ -83,6 +84,7 @@ go tool pprof http://localhost:8888/debug/pprof/profile
     - WaitGroup,Mutex,Cond
     - atomic
       - ```go run -race atomic.go ```
+      - ```./atomic.exe ```
     - useful tool
       - http、bufio、log、encoding/json、regexp、time
       - strings/math/rand
